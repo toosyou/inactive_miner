@@ -18,7 +18,7 @@ def mining_without_notice():
     who_read = who_read.splitlines()
     for line in who_read:
         if not line.startswith('toosyou') and (not 'tmux' in line):
-            print('Someone else logins!')
+            print('Someone else logins!\t'+line)
             someone_else_detected = True
             if mining_is_on:
                 # kill the miner
