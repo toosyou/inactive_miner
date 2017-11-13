@@ -11,7 +11,7 @@ mining_is_on = False
 miner_process = None
 
 allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'watch', 'systemd', '(sd-pam)', \
-                'dbus-launch', 'dbus-daemon', 'at-spi-bus-laun', 'at-spi2-registr']
+                'dbus-launch', 'dbus-daemon', 'at-spi-bus-laun', 'at-spi2-registr', 'bash', 'sh', 'tcsh']
 
 def get_normal_users():
     rtn = list()
