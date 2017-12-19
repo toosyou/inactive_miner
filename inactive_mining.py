@@ -10,7 +10,7 @@ import getpass
 mining_is_on = False
 miner_process = None
 
-allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'watch', 'systemd', '(sd-pam)', \
+allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'bash', 'tmux', 'watch', 'systemd', '(sd-pam)', \
                 'dbus-launch', 'dbus-daemon', 'at-spi-bus-laun', 'at-spi2-registr']
 
 def get_normal_users():
